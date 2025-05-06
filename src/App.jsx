@@ -85,8 +85,8 @@ function App() {
   ];
   return (
     <>
-      <div className='px-4 pt-5'>
-        <div className='flex justify-between p-3 bg-neutral-100 rounded-xl mb-11'>
+      <div className='px-4 pt-5 pb-16 md:pt-10 max-w-[1170px] mx-auto'>
+        <div className='flex justify-between p-3 bg-neutral-100 rounded-xl mb-11 md:mb-[75px]'>
           <img src={Logo} alt='Logo' />
           <img
             src={Moon}
@@ -95,22 +95,24 @@ function App() {
           />
         </div>
         <div>
-          <h1 className='mb-7 text-3xl font-bold text-neutral-900 text-center'>
-            Extensions List
-          </h1>
-          {/* Filters Wrapper */}
-          <div className='flex items-center justify-center gap-3 mb-10'>
-            <button className='px-4 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300'>
-              All
-            </button>
-            <button className='px-4 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300'>
-              Active
-            </button>
-            <button className='px-4 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300'>
-              Inactive
-            </button>
+          <div className='flex flex-col sm:flex-row sm: justify-between'>
+            <h1 className='mb-7 text-3xl md:text-4xl font-bold text-blue-zodiac text-center'>
+              Extensions List
+            </h1>
+            {/* Filters Wrapper */}
+            <div className='flex items-center justify-center gap-3 mb-10'>
+              <button className='px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300'>
+                All
+              </button>
+              <button className='px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300'>
+                Active
+              </button>
+              <button className='px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300'>
+                Inactive
+              </button>
+            </div>
           </div>
-          <div className='flex flex-col gap-2.5'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5'>
             {extensions.map((extension, index) => {
               return (
                 <div key={index} className='p-4 bg-neutral-100 rounded-xl'>
@@ -123,8 +125,12 @@ function App() {
                       />
                     </div>
                     <div>
-                      <h2 className='text-xl font-bold'>{extension.name}</h2>
-                      <p className='text-sm'>{extension.description}</p>
+                      <h2 className='text-xl font-bold text-blue-zodiac'>
+                        {extension.name}
+                      </h2>
+                      <p className='text-sm text-abbey'>
+                        {extension.description}
+                      </p>
                     </div>
                   </div>
                   <div className='flex justify-between'>
