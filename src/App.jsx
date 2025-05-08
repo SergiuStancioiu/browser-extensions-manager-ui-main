@@ -1,9 +1,11 @@
 import Logo from '../src/assets/images/logo.svg';
 import Moon from '../src/assets/images/icon-moon.svg';
+import { useState, useEffect } from 'react';
 
 function App() {
-  const extensions = [
+  const extensionsArr = [
     {
+      id: 1,
       logo: '../src/assets/images/logo-devlens.svg',
       name: 'DevLens',
       description:
@@ -11,12 +13,14 @@ function App() {
       isActive: true,
     },
     {
+      id: 2,
       logo: '../src/assets/images/logo-style-spy.svg',
       name: 'StyleSpy',
       description: 'Instantly analyze and copy CSS from any webpage element.',
       isActive: true,
     },
     {
+      id: 3,
       logo: '../src/assets/images/logo-speed-boost.svg',
       name: 'SpeedBoost',
       description:
@@ -24,6 +28,7 @@ function App() {
       isActive: false,
     },
     {
+      id: 4,
       logo: '../src/assets/images/logo-json-wizard.svg',
       name: 'JSONWizard',
       description:
@@ -31,12 +36,14 @@ function App() {
       isActive: true,
     },
     {
+      id: 5,
       logo: '../src/assets/images/logo-tab-master-pro.svg',
       name: 'TabMaster Pro',
       description: 'Organizes browser tabs into groups and sessions.',
       isActive: true,
     },
     {
+      id: 6,
       logo: '../src/assets/images/logo-viewport-buddy.svg',
       name: 'ViewportBuddy',
       description:
@@ -44,6 +51,7 @@ function App() {
       isActive: false,
     },
     {
+      id: 7,
       logo: '../src/assets/images/logo-markup-notes.svg',
       name: 'Markup Notes',
       description:
@@ -51,6 +59,7 @@ function App() {
       isActive: true,
     },
     {
+      id: 8,
       logo: '../src/assets/images/logo-grid-guides.svg',
       name: 'GridGuides',
       description:
@@ -58,24 +67,28 @@ function App() {
       isActive: false,
     },
     {
+      id: 9,
       logo: '../src/assets/images/logo-palette-picker.svg',
       name: 'Palette Picker',
       description: 'Instantly extracts color palettes from any webpage.',
       isActive: true,
     },
     {
+      id: 10,
       logo: '../src/assets/images/logo-link-checker.svg',
       name: 'LinkChecker',
       description: 'Scans and highlights broken links on any page.',
       isActive: true,
     },
     {
+      id: 11,
       logo: '../src/assets/images/logo-dom-snapshot.svg',
       name: 'DOM Snapshot',
       description: 'Capture and export DOM structures quickly.',
       isActive: false,
     },
     {
+      id: 12,
       logo: '../src/assets/images/logo-console-plus.svg',
       name: 'ConsolePlus',
       description:
@@ -83,6 +96,20 @@ function App() {
       isActive: true,
     },
   ];
+
+  const [extensions, setExtensions] = useState([]);
+
+  const onClickRemoveHandler = (id) => {
+    const updatedExtensions = extensions.filter(
+      (extension) => extension.id !== id
+    );
+    setExtensions(updatedExtensions);
+  };
+
+  useEffect(() => {
+    setExtensions(extensionsArr);
+  }, []);
+
   return (
     <>
       <div className='px-4 pt-5 pb-16 md:pt-10 max-w-[1170px] mx-auto'>
@@ -91,7 +118,7 @@ function App() {
           <img
             src={Moon}
             alt='Icon Moon'
-            className='p-[15px] bg-neutral-200 rounded-xl'
+            className='p-[15px] bg-neutral-200 rounded-xl cursor-pointer'
           />
         </div>
         <div>
@@ -113,9 +140,12 @@ function App() {
             </div>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5'>
-            {extensions.map((extension, index) => {
+            {extensions.map((extension) => {
               return (
-                <div key={index} className='p-4 bg-neutral-100 rounded-xl'>
+                <div
+                  key={extension.id}
+                  className='p-4 bg-neutral-100 rounded-xl'
+                >
                   <div className='flex gap-4'>
                     <div className='w-[60px] mb-8'>
                       <img
@@ -134,7 +164,10 @@ function App() {
                     </div>
                   </div>
                   <div className='flex justify-between'>
-                    <button className='px-4 border border-gray-300 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:border-red-500 hover:text-white cursor-pointer transform duration-300'>
+                    <button
+                      onClick={() => onClickRemoveHandler(extension.id)}
+                      className='px-4 border border-gray-300 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:border-red-500 hover:text-white cursor-pointer transform duration-300'
+                    >
                       Remove
                     </button>
                     <label className='relative inline-block w-[36px] h-[20px]'>
