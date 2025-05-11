@@ -52,9 +52,13 @@ function App() {
 
   return (
     <>
+      {/* Page Main Container */}
       <div className='px-4 pt-5 pb-16 md:pt-10 max-w-[1170px] mx-auto'>
+        {/* Header Wrapper */}
         <div className='flex justify-between p-3 bg-neutral-100 rounded-xl mb-11 md:mb-[75px]'>
+          {/* Page Logo */}
           <img src={Logo} alt='Logo' />
+          {/* Toggle Dark Mode */}
           <img
             src={Moon}
             alt='Icon Moon'
@@ -62,10 +66,13 @@ function App() {
           />
         </div>
         <div>
+          {/* Title, Filters Wrapper */}
           <div className='flex flex-col sm:flex-row sm:justify-between'>
+            {/* Title */}
             <h1 className='mb-7 text-3xl md:text-4xl font-bold text-blue-zodiac text-center'>
               Extensions List
             </h1>
+            {/* Extensions Filters Wrapper */}
             <div className='flex items-center justify-center gap-3 mb-10'>
               {filters.map((filter, index) => {
                 return (
@@ -82,7 +89,7 @@ function App() {
               })}
             </div>
           </div>
-
+          {/* Extensions Wrapper */}
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5'>
             {filteredExtensions.map((extension) => (
               <div key={extension.id} className='p-4 bg-neutral-100 rounded-xl'>
@@ -104,12 +111,14 @@ function App() {
                   </div>
                 </div>
                 <div className='flex justify-between'>
+                  {/* Remove Extension Button */}
                   <button
                     onClick={() => onClickRemoveHandler(extension.id)}
                     className='px-4 border border-gray-300 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:border-red-500 hover:text-white cursor-pointer transform duration-300'
                   >
                     Remove
                   </button>
+                  {/* Toggle Switch */}
                   <label className='relative inline-block w-[36px] h-[20px]'>
                     <input
                       type='checkbox'
@@ -126,7 +135,7 @@ function App() {
               </div>
             ))}
           </div>
-
+          {/* Message Shown When No Extensions */}
           {filteredExtensions.length === 0 && (
             <div className='px-5 py-10 md:p-10 bg-white flex items-center justify-center rounded-xl text-lg md:text-2xl font-semibold'>
               Extensions list is empty
