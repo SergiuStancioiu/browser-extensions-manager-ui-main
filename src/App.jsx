@@ -8,6 +8,7 @@ function App() {
   const [filterExtension, setFilterExtension] = useState('All');
 
   const generateRandomId = () => Math.floor(Math.random() * 1000) + 1;
+  const filters = ['All', 'Active', 'Inactive'];
 
   useEffect(() => {
     fetch('/data.json')
@@ -40,9 +41,7 @@ function App() {
     setExtensions(updatedExtensions);
   };
 
-  const onClickAllHandler = () => setFilterExtension('All');
-  const onClickActiveHandler = () => setFilterExtension('Active');
-  const onClickInactiveHandler = () => setFilterExtension('Inactive');
+  const onClickFilterHandler = (filter) => setFilterExtension(filter);
 
   const filteredExtensions = extensions.filter((ext) => {
     if (filterExtension === 'Active') return ext.isActive;
@@ -68,30 +67,19 @@ function App() {
               Extensions List
             </h1>
             <div className='flex items-center justify-center gap-3 mb-10'>
-              <button
-                onClick={onClickAllHandler}
-                className={`px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300 ${
-                  filterExtension === 'All' ? 'bg-red-500 text-white' : ''
-                }`}
-              >
-                All
-              </button>
-              <button
-                onClick={onClickActiveHandler}
-                className={`px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300 ${
-                  filterExtension === 'Active' ? 'bg-red-500 text-white' : ''
-                }`}
-              >
-                Active
-              </button>
-              <button
-                onClick={onClickInactiveHandler}
-                className={`px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300 ${
-                  filterExtension === 'Inactive' ? 'bg-red-500 text-white' : ''
-                }`}
-              >
-                Inactive
-              </button>
+              {filters.map((filter, index) => {
+                return (
+                  <button
+                    key={index}
+                    onClick={() => onClickFilterHandler(filter)}
+                    className={`px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300 ${
+                      filterExtension === filter ? 'bg-red-500 text-white' : ''
+                    }`}
+                  >
+                    {filter}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -103,7 +91,7 @@ function App() {
                     <img
                       className='w-full min-w-[60px]'
                       src={extension.logo}
-                      alt=''
+                      alt={extension.name}
                     />
                   </div>
                   <div>
