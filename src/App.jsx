@@ -1,5 +1,6 @@
 import Logo from '../src/assets/images/logo.svg';
 import Moon from '../src/assets/images/icon-moon.svg';
+import Sun from '../src/assets/images/icon-sun.svg';
 
 import { useState, useEffect } from 'react';
 
@@ -9,24 +10,6 @@ function App() {
 
   const generateRandomId = () => Math.floor(Math.random() * 1000) + 1;
   const filters = ['All', 'Active', 'Inactive'];
-
-  useEffect(() => {
-    fetch('/data.json')
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((jsonData) => {
-        const dataWithIds = jsonData.map((item) => ({
-          ...item,
-          id: generateRandomId(),
-        }));
-        setExtensions(dataWithIds);
-      })
-      .catch((error) => console.error('Fetch error:', error));
-  }, []);
 
   const onClickRemoveHandler = (id) => {
     setExtensions((prev) => prev.filter((ext) => ext.id !== id));
@@ -50,20 +33,68 @@ function App() {
     return true;
   });
 
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check localStorage for theme preference
+    return localStorage.getItem('theme') === 'dark';
+  });
+
+  useEffect(() => {
+    fetch('/data.json')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((jsonData) => {
+        const dataWithIds = jsonData.map((item) => ({
+          ...item,
+          id: generateRandomId(),
+        }));
+        setExtensions(dataWithIds);
+      })
+      .catch((error) => console.error('Fetch error:', error));
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
+
   return (
     <>
       {/* Page Main Container */}
       <div className='px-4 pt-5 pb-16 md:pt-10 max-w-[1170px] mx-auto'>
         {/* Header Wrapper */}
-        <div className='flex justify-between p-3 bg-neutral-100 rounded-xl mb-11 md:mb-[75px]'>
+        <div className='flex justify-between p-3 bg-neutral-100 dark:bg-ebony-clay rounded-xl mb-11 md:mb-[75px]'>
           {/* Page Logo */}
-          <img src={Logo} alt='Logo' />
-          {/* Toggle Dark Mode */}
           <img
-            src={Moon}
-            alt='Icon Moon'
-            className='p-[15px] bg-neutral-200 rounded-xl cursor-pointer'
+            className='filter dark:invert dark:brightness-50'
+            src={Logo}
+            alt='Logo'
           />
+          {/* Toggle Dark Mode */}
+          {!darkMode ? (
+            <img
+              onClick={() => setDarkMode(!darkMode)}
+              src={Moon}
+              alt='Icon Moon'
+              className='p-[15px] bg-neutral-200 rounded-xl cursor-pointer'
+            />
+          ) : (
+            <img
+              onClick={() => setDarkMode(!darkMode)}
+              src={Sun}
+              alt='Icon Moon'
+              className='p-[15px] bg-neutral-200 rounded-xl cursor-pointer'
+            />
+          )}
         </div>
         <div>
           {/* Title, Filters Wrapper */}
