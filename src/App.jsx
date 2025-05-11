@@ -72,7 +72,7 @@ function App() {
       {/* Page Main Container */}
       <div className='px-4 pt-5 pb-16 md:pt-10 max-w-[1170px] mx-auto'>
         {/* Header Wrapper */}
-        <div className='flex justify-between p-3 bg-neutral-100 dark:bg-ebony-clay rounded-xl mb-11 md:mb-[75px]'>
+        <div className='flex justify-between p-3 bg-neutral-100 dark:bg-ebony-clay rounded-xl mb-11 md:mb-[75px] transform duration-300'>
           {/* Page Logo */}
           <img
             className='filter dark:invert dark:brightness-50'
@@ -85,14 +85,14 @@ function App() {
               onClick={() => setDarkMode(!darkMode)}
               src={Moon}
               alt='Icon Moon'
-              className='p-[15px] bg-neutral-200 rounded-xl cursor-pointer'
+              className='p-[15px] bg-neutral-200  rounded-xl cursor-pointer'
             />
           ) : (
             <img
               onClick={() => setDarkMode(!darkMode)}
               src={Sun}
               alt='Icon Moon'
-              className='p-[15px] bg-neutral-200 rounded-xl cursor-pointer'
+              className='p-[15px] bg-neutral-200  dark:bg-martinique rounded-xl cursor-pointer'
             />
           )}
         </div>
@@ -100,7 +100,7 @@ function App() {
           {/* Title, Filters Wrapper */}
           <div className='flex flex-col sm:flex-row sm:justify-between'>
             {/* Title */}
-            <h1 className='mb-7 text-3xl md:text-4xl font-bold text-blue-zodiac text-center'>
+            <h1 className='mb-7 text-3xl md:text-4xl font-bold text-blue-zodiac text-center transform duration-300 dark:text-white'>
               Extensions List
             </h1>
             {/* Extensions Filters Wrapper */}
@@ -110,8 +110,10 @@ function App() {
                   <button
                     key={index}
                     onClick={() => onClickFilterHandler(filter)}
-                    className={`px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500 hover:text-white cursor-pointer transform duration-300 ${
-                      filterExtension === filter ? 'bg-red-500 text-white' : ''
+                    className={`px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500  border border-gray-300 dark:border-gray-600 hover:text-white cursor-pointer transform duration-300 dark:bg-martinique dark:text-white ${
+                      filterExtension === filter
+                        ? 'bg-red-500 border border-red-500 dark:bg-red-500 text-white'
+                        : ''
                     }`}
                   >
                     {filter}
@@ -123,7 +125,10 @@ function App() {
           {/* Extensions Wrapper */}
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5'>
             {filteredExtensions.map((extension) => (
-              <div key={extension.id} className='p-4 bg-neutral-100 rounded-xl'>
+              <div
+                key={extension.id}
+                className='p-4 bg-neutral-100 rounded-xl transform duration-300 dark:bg-ebony-clay border border-gray-300 dark:border-gray-700'
+              >
                 <div className='flex gap-4'>
                   <div className='w-[60px] mb-8'>
                     <img
@@ -133,19 +138,19 @@ function App() {
                     />
                   </div>
                   <div>
-                    <h2 className='text-xl font-bold text-blue-zodiac'>
+                    <h2 className='text-xl font-bold text-blue-zodiac dark:text-white pb-1.5'>
                       {extension.name}
                     </h2>
-                    <p className='text-sm text-abbey'>
+                    <p className='text-sm text-abbey dark:text-gray-400'>
                       {extension.description}
                     </p>
                   </div>
                 </div>
-                <div className='flex justify-between'>
+                <div className='flex justify-between items-center'>
                   {/* Remove Extension Button */}
                   <button
                     onClick={() => onClickRemoveHandler(extension.id)}
-                    className='px-4 border border-gray-300 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:border-red-500 hover:text-white cursor-pointer transform duration-300'
+                    className='px-4 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:border-red-500 hover:text-white cursor-pointer transform duration-300 border border-gray-300 dark:border-gray-700 dark:bg-transparent dark:text-white'
                   >
                     Remove
                   </button>
@@ -159,7 +164,7 @@ function App() {
                         onChangeActiveExtensionHandler(extension.id)
                       }
                     />
-                    <span className='absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 transition duration-300 peer-checked:bg-red-500 peer-focus:ring-1 peer-focus:ring-red-500 rounded-full'></span>
+                    <span className='absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 transition duration-300 peer-checked:bg-red-500 peer-focus:ring-1 peer-focus:ring-red-500 rounded-full dark:bg-martinique'></span>
                     <span className="absolute cursor-pointer content-[''] h-[14px] w-[14px] left-[3px] bottom-[3px] bg-white transition duration-300 rounded-full peer-checked:translate-x-[16px]"></span>
                   </label>
                 </div>
@@ -168,7 +173,7 @@ function App() {
           </div>
           {/* Message Shown When No Extensions */}
           {filteredExtensions.length === 0 && (
-            <div className='px-5 py-10 md:p-10 bg-white flex items-center justify-center rounded-xl text-lg md:text-2xl font-semibold'>
+            <div className='px-5 py-10 md:p-10 bg-white flex items-center justify-center rounded-xl text-lg md:text-2xl font-semibold dark:bg-martinique dark:text-white border border-gray-300 dark:border-gray-600'>
               Extensions list is empty
             </div>
           )}
