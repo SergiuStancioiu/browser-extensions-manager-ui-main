@@ -1,6 +1,6 @@
-import Logo from '../src/assets/images/logo.svg';
-import Moon from '../src/assets/images/icon-moon.svg';
-import Sun from '../src/assets/images/icon-sun.svg';
+import Header from './assets/components/Header';
+import Filters from './assets/components/Filters';
+import Extensions from '../src/assets/components/Extensions';
 
 import { useState, useEffect } from 'react';
 
@@ -29,13 +29,7 @@ function App() {
   const filteredExtensions = extensions.filter((ext) => {
     if (filterExtension === 'Active') return ext.isActive;
     if (filterExtension === 'Inactive') return !ext.isActive;
-
     return true;
-  });
-
-  const [darkMode, setDarkMode] = useState(() => {
-    // Check localStorage for theme preference
-    return localStorage.getItem('theme') === 'dark';
   });
 
   useEffect(() => {
@@ -56,122 +50,26 @@ function App() {
       .catch((error) => console.error('Fetch error:', error));
   }, []);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    if (darkMode) {
-      root.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [darkMode]);
-
   return (
     <>
-      {/* Page Main Container */}
       <div className='px-4 pt-5 pb-16 md:pt-10 max-w-[1170px] mx-auto'>
-        {/* Header Wrapper */}
-        <div className='flex justify-between p-3 bg-neutral-100 dark:bg-ebony-clay rounded-xl mb-11 md:mb-[75px] transform duration-300'>
-          {/* Page Logo */}
-          <img
-            className='filter dark:invert dark:brightness-50'
-            src={Logo}
-            alt='Logo'
-          />
-          {/* Toggle Dark Mode */}
-          {!darkMode ? (
-            <img
-              onClick={() => setDarkMode(!darkMode)}
-              src={Moon}
-              alt='Icon Moon'
-              className='p-[15px] bg-neutral-200  rounded-xl cursor-pointer'
-            />
-          ) : (
-            <img
-              onClick={() => setDarkMode(!darkMode)}
-              src={Sun}
-              alt='Icon Moon'
-              className='p-[15px] bg-neutral-200  dark:bg-martinique rounded-xl cursor-pointer'
-            />
-          )}
-        </div>
+        <Header />
         <div>
-          {/* Title, Filters Wrapper */}
           <div className='flex flex-col sm:flex-row sm:justify-between'>
-            {/* Title */}
             <h1 className='mb-7 text-3xl md:text-4xl font-bold text-blue-zodiac text-center transform duration-300 dark:text-white'>
               Extensions List
             </h1>
-            {/* Extensions Filters Wrapper */}
-            <div className='flex items-center justify-center gap-3 mb-10'>
-              {filters.map((filter, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => onClickFilterHandler(filter)}
-                    className={`px-4 py-1.5 text-blue-zodiac bg-neutral-100 rounded-3xl hover:bg-red-500  border border-gray-300 dark:border-gray-600 hover:text-white cursor-pointer transform duration-300 dark:bg-martinique dark:text-white ${
-                      filterExtension === filter
-                        ? 'bg-red-500 border border-red-500 dark:bg-red-500 text-white'
-                        : ''
-                    }`}
-                  >
-                    {filter}
-                  </button>
-                );
-              })}
-            </div>
+            <Filters
+              filters={filters}
+              filterExtension={filterExtension}
+              onClickFilterHandler={onClickFilterHandler}
+            />
           </div>
-          {/* Extensions Wrapper */}
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5'>
-            {filteredExtensions.map((extension) => (
-              <div
-                key={extension.id}
-                className='p-4 bg-neutral-100 rounded-xl transform duration-300 dark:bg-ebony-clay border border-gray-300 dark:border-gray-700'
-              >
-                <div className='flex gap-4'>
-                  <div className='w-[60px] mb-8'>
-                    <img
-                      className='w-full min-w-[60px]'
-                      src={extension.logo}
-                      alt={extension.name}
-                    />
-                  </div>
-                  <div>
-                    <h2 className='text-xl font-bold text-blue-zodiac dark:text-white pb-1.5'>
-                      {extension.name}
-                    </h2>
-                    <p className='text-sm text-abbey dark:text-gray-400'>
-                      {extension.description}
-                    </p>
-                  </div>
-                </div>
-                <div className='flex justify-between items-center'>
-                  {/* Remove Extension Button */}
-                  <button
-                    onClick={() => onClickRemoveHandler(extension.id)}
-                    className='px-4 py-1.5 bg-neutral-100 rounded-3xl hover:bg-red-500 hover:border-red-500 hover:text-white cursor-pointer transform duration-300 border border-gray-300 dark:border-gray-700 dark:bg-transparent dark:text-white'
-                  >
-                    Remove
-                  </button>
-                  {/* Toggle Switch */}
-                  <label className='relative inline-block w-[36px] h-[20px]'>
-                    <input
-                      type='checkbox'
-                      className='sr-only peer'
-                      checked={extension.isActive}
-                      onChange={() =>
-                        onChangeActiveExtensionHandler(extension.id)
-                      }
-                    />
-                    <span className='absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-gray-300 transition duration-300 peer-checked:bg-red-500 peer-focus:ring-1 peer-focus:ring-red-500 rounded-full dark:bg-martinique'></span>
-                    <span className="absolute cursor-pointer content-[''] h-[14px] w-[14px] left-[3px] bottom-[3px] bg-white transition duration-300 rounded-full peer-checked:translate-x-[16px]"></span>
-                  </label>
-                </div>
-              </div>
-            ))}
-          </div>
-          {/* Message Shown When No Extensions */}
+          <Extensions
+            filteredExtensions={filteredExtensions}
+            onClickRemoveHandler={onClickRemoveHandler}
+            onChangeActiveExtensionHandler={onChangeActiveExtensionHandler}
+          />
           {filteredExtensions.length === 0 && (
             <div className='px-5 py-10 md:p-10 bg-white flex items-center justify-center rounded-xl text-lg md:text-2xl font-semibold dark:bg-martinique dark:text-white border border-gray-300 dark:border-gray-600'>
               Extensions list is empty
