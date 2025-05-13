@@ -1,4 +1,4 @@
-import Logo from '../images/logo.svg';
+import Logo from '../images/logo.svg?react';
 import Moon from '../images/icon-moon.svg';
 import Sun from '../images/icon-sun.svg';
 
@@ -21,12 +21,9 @@ function Header() {
   }, [darkMode]);
 
   return (
-    <div className='flex justify-between p-3 bg-neutral-100 dark:bg-ebony-clay rounded-xl mb-11 md:mb-[75px] transform duration-300'>
-      <img
-        className='filter dark:invert dark:brightness-50'
-        src={Logo}
-        alt='Logo'
-      />
+    <div className='flex justify-between p-3 bg-neutral-100 dark:bg-ebony-clay rounded-xl mb-11 md:mb-[75px] transform duration-300 items-center'>
+      <Logo className='text-black dark:text-white' />
+
       {!darkMode ? (
         <img
           onClick={() => setDarkMode(true)}
