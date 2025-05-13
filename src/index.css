@@ -16,9 +16,6 @@
   --red-4: hsl(3, 86%, 64%);
   --red-5: hsl(3, 71%, 56%);
   --red-7: hsl(3, 77%, 44%);
-
-  --gradient-light: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%);
-  --gradient-dark: linear-gradient(180deg, #040918 0%, #091540 100%);
 }
 
 @theme {
@@ -27,4 +24,6 @@
   --color-abbey: #050a1e;
   --color-ebony-clay: #1f2535;
   --color-martinique: #2f354b;
+  --color-black-pearl: #040918;
+  --color-downriver: #091540;
 }
