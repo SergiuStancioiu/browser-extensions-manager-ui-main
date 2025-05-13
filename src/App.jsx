@@ -1,6 +1,6 @@
 import Header from './assets/components/Header';
-import Filters from './assets/components/Filters';
-import Extensions from '../src/assets/components/Extensions';
+import Filter from './assets/components/Filter';
+import Extension from './assets/components/Extension';
 
 import { useState, useEffect } from 'react';
 
@@ -59,13 +59,13 @@ function App() {
             <h1 className='mb-7 text-3xl md:text-4xl font-bold text-blue-zodiac text-center transform duration-300 dark:text-white'>
               Extensions List
             </h1>
-            <Filters
+            <Filter
               filters={filters}
               filterExtension={filterExtension}
               onClickFilterHandler={onClickFilterHandler}
             />
           </div>
-          <Extensions
+          <Extension
             filteredExtensions={filteredExtensions}
             onClickRemoveHandler={onClickRemoveHandler}
             onChangeActiveExtensionHandler={onChangeActiveExtensionHandler}
